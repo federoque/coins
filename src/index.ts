@@ -2,8 +2,13 @@ import express from 'express';
 import AppRouter from './routes';
 import config from './config';
 import cors from 'cors';
+import http from 'http';
+import sockets from './sockets';
 
 const app = express();
+const server = http.createServer(app);
+const io = config.websocket(server);
+sockets(io);
 app.use(express.json());
 app.use(cors());
 app.use((_req, res, next) => {
@@ -26,7 +31,7 @@ app.use((req, _res, next) => {
 
 app.use('/api', AppRouter);
 
-app.listen(`${config.PORT}`, () => {
+server.listen(`${config.PORT}`, () => {
     console.log(`Server is running on port ${config.PORT}`);
-    // config.coins_cronjob();
+    config.coins_cronjob();
 });

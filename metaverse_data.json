@@ -4,6 +4,9 @@
         "ymax": 100,
         "zmax": 100
     },
+    "coins": {
+        "quantity": 100
+    },
     "rooms": {
         "1": {
             "xmin": 0,

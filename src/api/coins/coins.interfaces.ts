@@ -3,7 +3,7 @@ export interface Coin {
     x: number;
     y: number;
     z: number;
-    owner: number | null;
+    owner: string | null;
 }
 
 export interface Metaverse {
@@ -19,4 +19,9 @@ export interface Room {
     ymax: number;
     zmin: number;
     zmax: number;
+}
+
+export interface UserRoom {
+    idUser: string;
+    idRoom: string;
 }
