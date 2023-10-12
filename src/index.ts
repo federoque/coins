@@ -31,7 +31,7 @@ app.use((req, _res, next) => {
 
 app.use('/api', AppRouter);
 
-server.listen(`${config.PORT}`, () => {
-    console.log(`Server is running on port ${config.PORT}`);
+server.listen(3000, () => {
+    console.log(`Server is running on port 3000`);
     config.coins_cronjob();
 });
