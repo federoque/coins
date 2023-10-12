@@ -35,9 +35,17 @@ export default function connectionSocket(io: Server) {
             } else {
                 coinsService
                     .getRoomCoins(String(metaverse_room.room), socket.id)
-                    .then((data) =>
-                        socket.emit('server:roomcoins', { coins: data })
-                    );
+                    .then((data) => {
+                        if (!data.data) {
+                            socket.emit('server:warning', {
+                                message: data.message
+                            });
+                        } else {
+                            socket.emit('server:roomcoins', {
+                                coins: data.data
+                            });
+                        }
+                    });
             }
         });
 

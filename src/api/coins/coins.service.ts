@@ -62,6 +62,12 @@ const coinsService = {
             if (!usersRooms) {
                 await redis.set(Keys.usersRooms, JSON.stringify([userRoom]));
             } else {
+                if (usersRooms.find((user) => user.idUser === idUser)) {
+                    return {
+                        data: null,
+                        message: 'You are already in a room'
+                    };
+                }
                 await redis.set(
                     Keys.usersRooms,
                     JSON.stringify([...usersRooms, userRoom])
@@ -83,7 +89,8 @@ const coinsService = {
                 coin.z < room.zmax &&
                 coin.owner === null
         );
-        return filterCoins.map((coin) => {
+
+        const returnedCoins = filterCoins.map((coin) => {
             return {
                 id: coin.id,
                 x: coin.x,
@@ -91,6 +98,9 @@ const coinsService = {
                 z: coin.z
             };
         });
+        return {
+            data: returnedCoins
+        };
     },
 
     async coinCatching(idUser: string, idCoin: number) {
@@ -111,7 +121,9 @@ const coinsService = {
                 message: 'User does not belong any room'
             };
         const coins = await this.getRoomCoins(room.idRoom);
-        const catchCoin = coins.find((coin) => coin.id === idCoin);
+        const catchCoin: Coin = coins.data.find(
+            (coin: Coin) => coin.id === idCoin
+        );
         if (!catchCoin)
             return {
                 data: null,
@@ -134,7 +146,7 @@ const coinsService = {
             await redis.get(Keys.usersRooms)
         );
         if (!usersRooms || usersRooms.length === 0) {
-            throw new Error('Nobody into a Room');
+            throw new Error('Nobody into the Room');
         } else {
             const users = usersRooms
                 .filter((userRoom) => userRoom.idRoom === roomNumber)

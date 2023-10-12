@@ -24,7 +24,7 @@ const coinsController = {
             const coins = await coinsService.getRoomCoins(String(room));
             res.send({
                 success: true,
-                data: coins
+                data: coins.data
             });
         } catch (error) {
             res.status(400).send({

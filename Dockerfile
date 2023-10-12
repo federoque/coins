@@ -4,5 +4,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run tsc
-EXPOSE 3001
+ENV PORT=$PORT
+EXPOSE $PORT
 CMD ["npm", "start"]
