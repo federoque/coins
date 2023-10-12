@@ -9,13 +9,6 @@ Una vez que una persona agarra la moneda, ya desaparece y nadie más la puede ob
 
 Clonar el Repositorio en un directorio local.
 
-- Crear archivo .env de variables de entorno con la siguiente variable:
-
-```
-PORT=TU_PUERTO
-
-```
-
 Luego en la consola ejecutar:
 
 docker-compose up -d
